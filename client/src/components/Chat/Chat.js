@@ -1,26 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import queryString from "query-string";
 import io from "socket.io-client";
 import { useLocation } from "react-router-dom";
-// import UserDataContextProvider from "../../context/UserDataContextProvider";
-
 import "./Chat.css";
 
 let socket;
 export default function Chat(props) {
-  // const { setName, setRoom } = useContext(UserDataContextProvider);
-  //  const [name, setName] = useState("");
-  //  const [room, setRoom] = useState("");
+  const [name, setName] = useState("");
+  const [room, setRoom] = useState("");
   const location = useLocation();
-  const ENDPOINT = 'localhost:8000';
+  const ENDPOINT = "localhost:8000";
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
+    setName(name);
+    setRoom(room);
     socket = io(ENDPOINT);
-    console.log(socket);
-    console.log(name, room);
-    // setName(name);
-    // setRoom(room);
+    socket.emit("join", { name, room }, (error) => {
+      // console.log(error);
+      // throw new Error(error);
+      console.error(error);
+    });
     // eslint-disable-next-line
-  }, []);
+  }, [ENDPOINT, location.search]);
   return <div>Chat</div>;
 }
