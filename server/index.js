@@ -1,29 +1,61 @@
+// const express = require("express");
+// const http = require("http")
+// const socketio = require("socket.io");
+// const app = express();
+// const server = http.createServer(app)
+// const PORT = 8000
+// const io = socketio(server)
+// const router = require("./router/routes");
+// const { error } = require("console");
+// app.use(router);
+// io.on("connection", (socket) => {
+//   console.log("connection successful");
+//   socket.on("join", ({ name, room }, callback) => {
+//     const error = true;
+//     if (error) {
+//       callback({ error: "something went wrong" });
+//     }
+//   });
+//   // console.log("connection successful")
+//   socket.on("disconnect", () => {
+//     console.log("disconnection successful");
+//   });
+// });
+// server.prependListener("request", (req, res) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+// });
+// server.listen(PORT, ()=>{
+//     console.log(`server listening on port ${PORT}`)
+// })
+
+// Practice code
 const express = require("express");
-const http = require("http")
-const socketio = require("socket.io");
+const http = require("http");
 const app = express();
-const server = http.createServer(app)
-const PORT = 8000
-const io = socketio(server)
-const router = require("./router/routes");
-const { error } = require("console");
-app.use(router);
-io.on("connection", (socket) => {
-  console.log("connection successful");
-  socket.on("join", ({ name, room }, callback) => {
-    const error = true;
-    if (error) {
-      callback({ error: "something went wrong" });
-    }
-  });
-  // console.log("connection successful")
-  socket.on("disconnect", () => {
-    console.log("disconnection successful");
-  });
+const dotenv = require("dotenv");
+dotenv.config();
+
+const chats = require("./data");
+
+
+
+app.get("/", (req, res) => {
+  res.send("API is running");
+  res.end();
 });
-server.prependListener("request", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+app.get("/api/chat", (req, res) => {
+  res.send(chats);
+  res.end();
 });
-server.listen(PORT, ()=>{
-    console.log(`server listening on port ${PORT}`)
-})
+app.get("/api/chat/:_id", (req, res) => {
+  const _id = req.params._id;
+  const chat = chats.filter((chat) => String(chat._id) === String(_id));
+  res.send(chat);
+});
+
+
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log("server started");
+});
