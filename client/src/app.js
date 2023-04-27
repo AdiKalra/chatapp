@@ -1,15 +1,13 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Chat from "./components/Chat/Chat";
-import Join from "./components/Home/Join";
-import "./style.css";
-
+import { Route, Routes } from "react-router-dom";
+import Chat from "./components/Chat/Chat.js";
+import Join from "./components/Home/Join.js";
 function App() {
   return (
-    <div>
+    <div className="App">
       <Routes>
-        <Route path="/" element={<Join />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/" exact element={<Join />} />
+        <Route path="/api/chat"  element={<Chat />} />
       </Routes>
     </div>
   );
