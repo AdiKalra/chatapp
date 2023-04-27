@@ -30,26 +30,28 @@
 
 // Practice code
 const express = require("express");
-const http = require("http");
+// const http = require("http");
 const app = express();
 const dotenv = require("dotenv");
+var cors = require("cors");
+
 dotenv.config();
 
 const chats = require("./data");
 
 
-
+app.use(cors())
 app.get("/", (req, res) => {
   res.send("API is running");
   res.end();
 });
-app.get("/api/chat", (req, res) => {
+app.get("/api/chats", (req, res) => {
   res.send(chats);
   res.end();
 });
 app.get("/api/chat/:_id", (req, res) => {
   const _id = req.params._id;
-  const chat = chats.filter((chat) => String(chat._id) === String(_id));
+  const chat = chats.filter((chat) => chat._id === _id);
   res.send(chat);
 });
 
