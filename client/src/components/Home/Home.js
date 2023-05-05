@@ -1,9 +1,11 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Container, Box, Text, Center } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 // import UserDataContextProvider from "../../context/UserDataContextProvider";
-import "./Join.css";
+import "./Home.css";
 
-export default function Join() {
+export default function Home() {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   // const { name, room, setName, setRoom } = useContext(UserDataContextProvider);
@@ -16,9 +18,61 @@ export default function Join() {
   //     return { ...prevState, [name]: value };
   //   });
   // };
-  return <div>Join</div>;
-}
+  return (
+    <Container
+      maxW={"md"}
+      minW={"md"}
+      centerContent
+      display={"flex"}
+      flexDirection={"column"}
+      alignItems={"center"}
+      mt={"100px"}
+    >
+      <Box
+        d={"flex"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        bgColor={"white"}
+        w={"100%"}
+        borderRadius={"lg"}
+        minH={"40px"}
+        mb={"20px"}
+        fontSize={"3xl"}
+        fontFamily={"Work sans"}
+      >
+        <Text color={"#0B2447"}>CHAT APP</Text>
+      </Box>
+      <Box
+        d={"flex"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        bgColor={"white"}
+        w={"100%"}
+        borderRadius={"lg"}
+        minH={"40%"}
+        mt={"20px"}
+      >
+        <Tabs>
+          <TabList>
+            <Tab>Login</Tab>
+            <Tab>Sign Up</Tab>
+          </TabList>
 
+          <TabPanels>
+            <TabPanel>
+              <p>one!</p>
+            </TabPanel>
+            <TabPanel>
+              <p>two!</p>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
+    </Container>
+  );
+}
 
 // {
 // <div className="joinOuterContainer">

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap');
 
 :root{
-    --prmy-clr: rgb(32, 32, 49);
+    --prmy-clr: #0B2447;
 }
 .App{
     min-height: 100vh;
