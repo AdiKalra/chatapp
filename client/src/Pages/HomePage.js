@@ -1,23 +1,15 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Container, Box, Text, Center } from "@chakra-ui/react";
+// import React, { useState } from "react";
+// import { Link } from "react-router-dom";
+import { Container, Box, Text } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-// import UserDataContextProvider from "../../context/UserDataContextProvider";
-import "./Home.css";
+import LoginForm from "../components/Authentication/LoginForm";
+import SignupForm from "../components/Authentication/SignupForm";
 
-export default function Home() {
-  const [name, setName] = useState("");
-  const [room, setRoom] = useState("");
-  // const { name, room, setName, setRoom } = useContext(UserDataContextProvider);
 
-  // const [details, setDetails] = useState({ name: "", room: "" });
+export default function HomePage() {
+  // const [name, setName] = useState("");
+  // const [room, setRoom] = useState("");
 
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setDetails((prevState) => {
-  //     return { ...prevState, [name]: value };
-  //   });
-  // };
   return (
     <Container
       maxW={"md"}
@@ -26,7 +18,7 @@ export default function Home() {
       display={"flex"}
       flexDirection={"column"}
       alignItems={"center"}
-      mt={"100px"}
+      mt={"50px"}
     >
       <Box
         d={"flex"}
@@ -41,31 +33,34 @@ export default function Home() {
         fontSize={"3xl"}
         fontFamily={"Work sans"}
       >
-        <Text color={"#0B2447"}>CHAT APP</Text>
+        <Text color={"#0B2447"} fontWeight={900}>
+          CHAT APP
+        </Text>
       </Box>
       <Box
         d={"flex"}
         display={"flex"}
         justifyContent={"center"}
-        alignItems={"center"}
         bgColor={"white"}
         w={"100%"}
         borderRadius={"lg"}
         minH={"40%"}
+        maxH={"90%"}
         mt={"20px"}
+        p={"10px"}
       >
-        <Tabs>
-          <TabList>
-            <Tab>Login</Tab>
-            <Tab>Sign Up</Tab>
+        <Tabs width={"80%"}>
+          <TabList mb={"10px"}>
+            <Tab width={"50%"}>Login</Tab>
+            <Tab width={"50%"}>Sign Up</Tab>
           </TabList>
 
           <TabPanels>
             <TabPanel>
-              <p>one!</p>
+              <LoginForm />
             </TabPanel>
             <TabPanel>
-              <p>two!</p>
+              <SignupForm />
             </TabPanel>
           </TabPanels>
         </Tabs>

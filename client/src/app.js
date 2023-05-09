@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Chat from "./components/Chat/Chat.js";
-import Home from "./components/Home/Home.js";
+import Home from "./Pages/HomePage";
+import Chat from "./Pages/ChatPage";
+
 function App() {
   return (
     <div className="App">
