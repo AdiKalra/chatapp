@@ -12,13 +12,14 @@ export default function HomePage() {
 
   return (
     <Container
-      maxW={"md"}
+      maxW={"lg"}
       minW={"md"}
       centerContent
       display={"flex"}
       flexDirection={"column"}
       alignItems={"center"}
-      mt={"50px"}
+      mt={"2em"}
+      pb={"10px"}
     >
       <Box
         d={"flex"}
@@ -28,8 +29,8 @@ export default function HomePage() {
         bgColor={"white"}
         w={"100%"}
         borderRadius={"lg"}
-        minH={"40px"}
-        mb={"20px"}
+        minH={"80px"}
+        mb={"10px"}
         fontSize={"3xl"}
         fontFamily={"Work sans"}
       >
@@ -45,8 +46,6 @@ export default function HomePage() {
         w={"100%"}
         borderRadius={"lg"}
         minH={"40%"}
-        maxH={"90%"}
-        mt={"20px"}
         p={"10px"}
       >
         <Tabs width={"80%"}>
@@ -68,44 +67,3 @@ export default function HomePage() {
     </Container>
   );
 }
-
-// {
-// <div className="joinOuterContainer">
-//   <div className="joinInnerContainer">
-//     <h1 className="heading">Join</h1>
-//     <div>
-//       <input
-//         type="text"
-//         className="joinInput"
-//         onChange={(event) => setName(event.target.value)}
-//         // onChange={handleChange}
-//         placeholder="Name"
-//         id="name"
-//         name="name"
-//         value={name}
-//         // value={details.name}
-//       />
-//     </div>
-//     <div>
-//       <input
-//         type="text"
-//         className="joinInput mt-20"
-//         onChange={(event) => setRoom(event.target.value)}
-//         // onChange={handleChange}
-//         placeholder="Room"
-//         id="room"
-//         name="room"
-//         value={room}
-//         // value={details.room}
-//       />
-//     </div>
-//     <Link
-//       onClick={(event) => (!name || !room ? event.preventDefault() : null)}
-//       to={`/chat?name=${name}&room=${room}`}
-//     >
-//       <button className="button mt-20" type="submit">
-//         Sign In
-//       </button>
-//     </Link>
-//   </div>
-// </div>;}

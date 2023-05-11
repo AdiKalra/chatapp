@@ -11,53 +11,49 @@ import React, { useState } from "react";
 import "../../style.css";
 
 function SignupForm() {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showCnfPassword, setShowCnfPassword] = useState(false);
-  // const [name, setName] = useState("");email
+
+
   return (
     <VStack>
-      <FormControl id="signup-name-input" mb={"5px"} isRequired>
-        <FormLabel fontSize={"14px"} mb={"1px"}>
-          Name:
-        </FormLabel>
+      <FormControl id="signup-name-input" isRequired>
+        <FormLabel fontSize={"14px"}>Name:</FormLabel>
         <Input
-          // variant="flushed"
           required
           placeholder="Enter your Name"
           onChange={(e) => setName(e.target.value)}
           value={name}
+          mb={"15px"}
         ></Input>
       </FormControl>
 
-      <FormControl id="signup-email-input" isRequired mb={"5px"}>
-        <FormLabel fontSize={"14px"} mb={"1px"}>
-          Email Address:
-        </FormLabel>
+      <FormControl id="signup-email-input" mb={"15px"} isRequired>
+        <FormLabel fontSize={"14px"}>Email Address:</FormLabel>
         <Input
-          // variant="flushed"
           required
           placeholder="Enter your Email Address"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          mb={"15px"}
         ></Input>
       </FormControl>
 
-      <FormControl id="signup-password-input" isRequired mb={"5px"}>
-        <FormLabel fontSize={"14px"} mb={"1px"}>
-          Password:
-        </FormLabel>
+      <FormControl id="signup-password-input" isRequired>
+        <FormLabel fontSize={"14px"}>Password:</FormLabel>
         <InputGroup size="md">
           <Input
-            // variant="flushed"
             required
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             type={showPassword ? "text" : "password"}
+            mb={"15px"}
           ></Input>
           <InputRightElement width="4.5rem">
             <Button
@@ -71,18 +67,16 @@ function SignupForm() {
         </InputGroup>
       </FormControl>
 
-      <FormControl id="signup-cnfpassword-input" isRequired mb={"5px"}>
-        <FormLabel fontSize={"14px"} mb={"1px"}>
-          Confirm Password:
-        </FormLabel>
+      <FormControl id="signup-cnfpassword-input" isRequired>
+        <FormLabel fontSize={"14px"}>Confirm Password:</FormLabel>
         <InputGroup size="md">
           <Input
-            // variant="flushed"
             required
             placeholder="Confirm Password"
             onChange={(e) => setCnfPassword(e.target.value)}
             value={cnfPassword}
             type={showCnfPassword ? "text" : "password"}
+            mb={"15px"}
           ></Input>
           <InputRightElement width="4.5rem">
             <Button
@@ -96,12 +90,24 @@ function SignupForm() {
         </InputGroup>
       </FormControl>
 
-      <FormControl mb={"5px"}>
-        <FormLabel fontSize={"14px"} mb={"1px"}>
-          Upload Profile Picture:
-        </FormLabel>
-        <Input type="file" accept="image/*" on></Input>
+      <FormControl isRequired>
+        <FormLabel fontSize={"14px"}>Upload Profile Picture:</FormLabel>
+        <Input type="file" accept="image/*" onChange={(e)=>{}}></Input>
       </FormControl>
+
+      <Button
+        mt={4}
+        bgColor="#0B2447"
+        color={"#fff"}
+        type="submit"
+        width={"100%"}
+        _hover={{
+          color: "#fff",
+          bgColor: "#19376D",
+        }}
+      >
+        Sign Up
+      </Button>
     </VStack>
   );
 }
