@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-
-const userModel = mongoose.Schema(
+const bcryptjs = require("bcryptjs");
+const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
@@ -9,6 +9,7 @@ const userModel = mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -16,7 +17,6 @@ const userModel = mongoose.Schema(
     },
     dp: {
       type: String,
-      required: true,
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
@@ -26,6 +26,14 @@ const userModel = mongoose.Schema(
   }
 );
 
-const User = mongoose.model("User", userModel);
+userSchema.pre("save", async function () {
+  const salt = await bcryptjs.genSalt(10);
+  this.password = bcryptjs.hash(this.password, salt);
+});
 
+userSchema.methods.verify_password = async function (input_password) {
+  return await bcryptjs.compare(input_password, this.password);
+};
+
+const User = mongoose.model("User", userSchema);
 module.exports = User;
