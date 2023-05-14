@@ -43,10 +43,10 @@ const authUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Email and password field can't be empty");
   }
-  // User.verifyPassword(password)
 
   const user = await User.findOne({ email });
-  if (user && user.verify_password(user.password)) {
+  const verified = await user.verify_password(password);
+  if (user && verified) {
     res.json({
       _id: user._id,
       name: user.name,

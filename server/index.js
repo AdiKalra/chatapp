@@ -6,6 +6,7 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const path = require("path");
 const userRoutes = require("./router/userRoutes");
+const { not_found, error_handling } = require("./middleware/error_middleware");
 
 dotenv.config();
 app.use(cors());
