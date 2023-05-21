@@ -26,7 +26,7 @@ function LoginForm() {
         ></Input>
       </FormControl>
 
-      <FormControl id="signup-password-input" isRequired>
+      <FormControl id="login-password-input" isRequired>
         <FormLabel fontSize={"14px"}>Password:</FormLabel>
         <InputGroup size="md">
           <Input
