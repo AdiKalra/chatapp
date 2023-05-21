@@ -26,14 +26,19 @@ const userSchema = mongoose.Schema(
   }
 );
 
-userSchema.pre("save", async function () {
-  const salt = await bcryptjs.genSalt(10);
-  this.password = bcryptjs.hash(this.password, salt);
+userSchema.pre("save", async function (next) {
+  try {
+    if (!this.isModified) return next();
+    const salt = await bcryptjs.genSalt(10);
+    this.password = await bcryptjs.hash(this.password, salt);
+    return next();
+  } catch (error) {
+    return error;
+  }
 });
 
 userSchema.methods.verify_password = async function (input_password) {
   const verified = await bcryptjs.compare(input_password, this.password);
-  console.log("usermodel verified: ", verified);
   return verified;
 };
 

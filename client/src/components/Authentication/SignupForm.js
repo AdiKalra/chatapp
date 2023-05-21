@@ -6,20 +6,72 @@ import {
   InputGroup,
   InputRightElement,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+// import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "../../style.css";
-
 function SignupForm() {
-
+  const toast = useToast();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showCnfPassword, setShowCnfPassword] = useState(false);
+  const [dp, setDp] = useState();
+  const [loading, setLoading] = useState(false);
 
-
+  useEffect(() => {
+    console.log(dp);
+  }, [dp]);
+  const updateDP = (pic) => {
+    setLoading(true);
+    if (pic === undefined) {
+      toast({
+        title: `Please select an image`,
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
+    }
+    if (
+      pic.type === "image/jpeg" ||
+      pic.type === "image/jpg" ||
+      pic.type === "image/png"
+    ) {
+      const data = new FormData();
+      data.append("file", pic);
+      data.append("upload_preset", "chatapp");
+      data.append("cloud_name", "adikalra");
+      fetch("https://api.cloudinary.com/v1_1/adikalra/image/upload", {
+        method: "POST",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setDp(res.url.toString());
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    } else {
+      toast({
+        title: `Please select an image`,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      console.log(dp);
+      setLoading(false);
+      return;
+    }
+  };
   return (
     <VStack>
       <FormControl id="signup-name-input" isRequired>
@@ -92,7 +144,12 @@ function SignupForm() {
 
       <FormControl isRequired>
         <FormLabel fontSize={"14px"}>Upload Profile Picture:</FormLabel>
-        <Input type="file" accept="image/*" onChange={(e)=>{}}></Input>
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={(e) => updateDP(e.target.files[0])}
+          // onClick={(e) => updateDP(e.target.file)}
+        ></Input>
       </FormControl>
 
       <Button
@@ -105,6 +162,7 @@ function SignupForm() {
           color: "#fff",
           bgColor: "#19376D",
         }}
+        isLoading={loading}
       >
         Sign Up
       </Button>
