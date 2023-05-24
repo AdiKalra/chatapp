@@ -8,9 +8,11 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-// import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../../style.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 function SignupForm() {
   const toast = useToast();
   const [name, setName] = useState("");
@@ -21,31 +23,32 @@ function SignupForm() {
   const [showCnfPassword, setShowCnfPassword] = useState(false);
   const [dp, setDp] = useState();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(dp);
-  }, [dp]);
   const updateDP = (pic) => {
     setLoading(true);
     if (pic === undefined) {
       toast({
-        title: `Please select an image`,
-        status: "warning",
+        title: "Please Select an image",
         duration: 5000,
-        isClosable: true,
         position: "bottom",
+        isClosable: true,
+        status: "warning",
       });
+      setLoading(false);
       return;
     }
+
     if (
+      pic.type === "image/png" ||
       pic.type === "image/jpeg" ||
-      pic.type === "image/jpg" ||
-      pic.type === "image/png"
+      pic.type === "image/jpg"
     ) {
       const data = new FormData();
       data.append("file", pic);
       data.append("upload_preset", "chatapp");
       data.append("cloud_name", "adikalra");
+
       fetch("https://api.cloudinary.com/v1_1/adikalra/image/upload", {
         method: "POST",
         body: data,
@@ -53,25 +56,94 @@ function SignupForm() {
         .then((res) => res.json())
         .then((res) => {
           setDp(res.url.toString());
-          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
-          setLoading(false);
         });
+      setLoading(false);
+      return;
     } else {
       toast({
-        title: `Please select an image`,
-        status: "error",
+        title: "Please Select an image of jpg, jpeg or png format",
         duration: 5000,
+        position: "bottom",
+        isClosable: true,
+        status: "error",
+      });
+    }
+    setLoading(false);
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    if (!name || !email || !password || !cnfPassword) {
+      toast({
+        title: "Please fill all the fields",
+        duration: 5000,
+        status: "error",
         isClosable: true,
         position: "bottom",
       });
-      console.log(dp);
       setLoading(false);
       return;
     }
+
+    if (password !== cnfPassword) {
+      toast({
+        title: "Password doesn't match",
+        duration: 5000,
+        status: "error",
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+      return;
+    }
+
+    // fetch("http://localhost:8000/api/user/", {
+    //   method: "POST",
+    //   body: data,
+    //   headers: {
+    //     "Content-type": "application/json",
+    //   },
+    // })
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
+    try {
+      const data = {
+        name,
+        email,
+        password,
+        dp,
+      };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { response_data } = await axios.post(
+        "http://localhost:8000/api/user/",
+        data,
+        config
+      );
+      toast({
+        title: "Registration Successful",
+        duration: 2000,
+        status: "success",
+        isClosable: true,
+        position: "bottom",
+      });
+
+      localStorage.setItem("response_data", JSON.stringify(response_data));
+      setLoading(false);
+      navigate("/api/chat");
+      return;
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
   };
+
   return (
     <VStack>
       <FormControl id="signup-name-input" isRequired>
@@ -148,7 +220,6 @@ function SignupForm() {
           type="file"
           accept="image/*"
           onChange={(e) => updateDP(e.target.files[0])}
-          // onClick={(e) => updateDP(e.target.file)}
         ></Input>
       </FormControl>
 
@@ -163,6 +234,7 @@ function SignupForm() {
           bgColor: "#19376D",
         }}
         isLoading={loading}
+        onClick={() => handleSubmit()}
       >
         Sign Up
       </Button>
