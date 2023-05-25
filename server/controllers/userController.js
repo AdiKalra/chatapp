@@ -59,4 +59,23 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, authUser };
+
+
+// /api/user?search=xyz
+const allusers = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: new RegExp(req.query.search, "i") },
+          { email: new RegExp(req.query.search, "i") },
+        ],
+      }
+    : {};
+  
+  const result = await User.find(keyword)
+  // res.send(result)
+  console.log(result)
+  res.end()
+});
+
+module.exports = { registerUser, authUser, allusers };
