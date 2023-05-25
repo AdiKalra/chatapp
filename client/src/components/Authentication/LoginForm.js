@@ -74,7 +74,6 @@ function LoginForm() {
           mb={"15px"}
         ></Input>
       </FormControl>
-
       <FormControl id="login-password-input" isRequired>
         <FormLabel fontSize={"14px"}>Password:</FormLabel>
         <InputGroup size="md">
@@ -97,7 +96,6 @@ function LoginForm() {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-
       <Button
         mt={4}
         bgColor="#0B2447"
@@ -113,6 +111,23 @@ function LoginForm() {
       >
         Login
       </Button>
+      <Button
+        mt={4}
+        bgColor="#C74B50"
+        color={"#fff"}
+        type="submit"
+        width={"100%"}
+        _hover={{
+          color: "#fff",
+          bgColor: "#e84B50",
+        }}
+        onClick={() => {
+          setEmail("guest@chatapp.com");
+          setPassword("guest1234");
+        }}
+      >
+        Get Guest User Credentials
+      </Button>
     </VStack>
   );
 }
@@ -120,16 +135,3 @@ function LoginForm() {
 export default LoginForm;
 
 
-// <Button
-//   mt={4}
-//   bgColor="#C74B50"
-//   color={"#fff"}
-//   type="submit"
-//   width={"100%"}
-//   _hover={{
-//     color: "#fff",
-//     bgColor: "#e84B50",
-//   }}
-// >
-//   Get Guest User Credentials
-// </Button>;
