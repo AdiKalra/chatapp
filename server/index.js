@@ -8,6 +8,7 @@ const connectDB = require("./config/db");
 const userRoutes = require("./router/userRoutes");
 const chatRoutes = require("./router/chatRoutes");
 const { not_found, error_handling } = require("./middleware/error_middleware");
+const User = require("./models/userModel");
 
 dotenv.config();
 app.use(cors());
@@ -22,3 +23,12 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`server started ${PORT}`);
 });
+
+// const testfn = async () => {
+//   const result = await User.find({ _id: "64709b161bc178baf17dd1a6" }).select(
+//     "name"
+//   );
+//   console.log(result[0].name);
+// };
+
+// testfn();
