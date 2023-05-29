@@ -27,9 +27,9 @@ const accessChat = asyncHandler(async (req, res) => {
   if (isChat.length > 0) {
     res.send(isChat);
   } else {
-    var newChatData = {
-      //   chatName: "sender",
-      chatName: (await User.find({ _id: userId }).select("name"))[0].name,
+    let user = (await User.find({ _id: userId }))[0];
+    let newChatData = {
+      chatName: user.name,
       isGrouped: false,
       users: [req.user._id, userId],
     };
@@ -51,9 +51,10 @@ const accessChat = asyncHandler(async (req, res) => {
 
 const fetchChat = asyncHandler(async (req, res) => {
   try {
-    Chat.find({ users: { $elemMatch: { $eq: req.user._id } } }).then((result) =>
-      res.send(result)
-    );
+    const result = await Chat.find({
+      users: { $elemMatch: { $eq: req.user._id } },
+    }).populate("users", "-password");
+    res.send(result);
   } catch (err) {
     res.status(400);
     throw new Error("No chat found");
