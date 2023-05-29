@@ -8,7 +8,7 @@ const connectDB = require("./config/db");
 const userRoutes = require("./router/userRoutes");
 const chatRoutes = require("./router/chatRoutes");
 const { not_found, error_handling } = require("./middleware/error_middleware");
-const User = require("./models/userModel");
+// const User = require("./models/userModel");
 
 dotenv.config();
 app.use(cors());

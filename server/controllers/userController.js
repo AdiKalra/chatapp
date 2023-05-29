@@ -59,7 +59,7 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 // /api/user?search=xyz
-const allusers = asyncHandler(async (req, res) => {
+const findusers = asyncHandler(async (req, res) => {
   const keyword = req.query.search
     ? {
         $or: [
@@ -69,8 +69,8 @@ const allusers = asyncHandler(async (req, res) => {
       }
     : {};
   const result = await User.find(keyword).find({ _id: { $ne: req.user._id } });
-  res.send(result)
+  res.send(result);
   res.end();
 });
 
-module.exports = { registerUser, authUser, allusers };
+module.exports = { registerUser, authUser, findusers };
