@@ -46,11 +46,10 @@ const authUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
   if (user && (await user.verify_password(password))) {
-    res.json({
+    res.send({
       _id: user._id,
       name: user.name,
       email: user.email,
-      token: user.token,
     });
   } else {
     res.status(400);

@@ -19,6 +19,7 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
+
   const handleSubmit = async () => {
     setLoading(true);
     if (!email || !password) {
@@ -43,20 +44,21 @@ function LoginForm() {
         password,
       };
 
-      const { response_data } = await axios.post(
+      // const { response_data } = await axios.post(
+      const response_data = await axios.post(
         "http://localhost:8000/api/user/login",
         data,
         config
       );
-
+      setLoading(false);
       toast({
-        title: "Login Successfull",
+        title: "Login Successful",
         status: "success",
         duration: 2000,
         isClosable: true,
       });
-      console.log(response_data);
-      localStorage.setItem("login_data", JSON.stringify(response_data));
+      localStorage.setItem("login_data", await JSON.stringify(response_data));
+
       navigate("/api/chat");
     } catch (err) {
       console.log(err);
