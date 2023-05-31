@@ -1,15 +1,18 @@
-// import React, { useState } from "react";
-// import { Link } from "react-router-dom";
 import { Container, Box, Text } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import LoginForm from "../components/Authentication/LoginForm";
 import SignupForm from "../components/Authentication/SignupForm";
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
-  // const [name, setName] = useState("");
-  // const [room, setRoom] = useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user-token"));
+    if (user) navigate("/api/chat");
 
+    // eslint-disable-next-line
+  }, []);
   return (
     <Container
       maxW={"lg"}

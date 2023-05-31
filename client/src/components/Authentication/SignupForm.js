@@ -99,16 +99,6 @@ function SignupForm() {
       setLoading(false);
       return;
     }
-
-    // fetch("http://localhost:8000/api/user/", {
-    //   method: "POST",
-    //   body: data,
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    // })
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
     try {
       const data = {
         name,
