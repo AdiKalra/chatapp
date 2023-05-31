@@ -46,11 +46,13 @@ const authUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
   if (user && (await user.verify_password(password))) {
-    res.send({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-    });
+    const token = getToken(user._id);
+    res.send(token);
+    // res.send({
+    //   _id: user._id,
+    //   name: user.name,
+    //   email: user.email,
+    // });
   } else {
     res.status(400);
     throw new Error("Bad credentials");

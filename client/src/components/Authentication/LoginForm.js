@@ -28,8 +28,10 @@ function LoginForm() {
         status: "warning",
         duration: 2000,
         isClosable: true,
+        position: "top",
       });
       setLoading(false);
+      return;
     }
 
     try {
@@ -44,24 +46,36 @@ function LoginForm() {
         password,
       };
 
-      // const { response_data } = await axios.post(
       const response_data = await axios.post(
         "http://localhost:8000/api/user/login",
         data,
         config
       );
+
       setLoading(false);
+
       toast({
         title: "Login Successful",
         status: "success",
-        duration: 2000,
+        duration: 5000,
         isClosable: true,
+        position: "top",
       });
-      localStorage.setItem("login_data", await JSON.stringify(response_data));
+      localStorage.setItem(
+        "user-token",
+        await JSON.stringify(response_data.data)
+      );
 
       navigate("/api/chat");
     } catch (err) {
-      console.log(err);
+      setLoading(false);
+      toast({
+        title: "Bad Credentials",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
     }
   };
   return (
