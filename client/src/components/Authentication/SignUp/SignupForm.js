@@ -9,7 +9,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import "../../style.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -111,11 +110,13 @@ function SignupForm() {
           "Content-Type": "application/json",
         },
       };
-      const { response_data } = await axios.post(
+      const response_data = await axios.post(
         "http://localhost:8000/api/user/",
         data,
         config
       );
+      console.log(response_data);
+
       toast({
         title: "Registration Successful",
         duration: 2000,
@@ -124,12 +125,22 @@ function SignupForm() {
         position: "bottom",
       });
 
-      localStorage.setItem("response_data", JSON.stringify(response_data));
+      localStorage.setItem("user-token", JSON.stringify(response_data.data));
       setLoading(false);
       navigate("/api/chat");
       return;
     } catch (err) {
-      console.log(err);
+       if (err.response.status === 400) {
+         toast({
+           title: `${err.response.data.message}`,
+           duration: 2000,
+           status: "error",
+           isClosable: true,
+           position: "bottom",
+         });
+         setLoading(false);
+         return;
+       }
       setLoading(false);
     }
   };
