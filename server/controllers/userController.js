@@ -6,14 +6,17 @@ const registerUser = asyncHandler(async (req, res) => {
   const { name, email, dp, password } = req.body;
 
   if (!name || !email || !password) {
-    res.status(400);
+    res.status(404);
     throw new Error("All fields are required");
+    // const err = new Error("All fields are required");
+    // next(err)
   }
 
   const userExists = await User.findOne({ email });
   if (userExists) {
     res.status(400);
     throw new Error("User already exists!");
+    return;
   }
 
   const user = await User.create({
@@ -24,13 +27,16 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      dp: user.dp,
-      token: getToken(user._id),
-    });
+    const token = await getToken(user._id);
+    res.status(201).send(token);
+
+    // res.status(201).json({
+    //   _id: user._id,
+    //   name: user.name,
+    //   email: user.email,
+    //   dp: user.dp,
+    //   token: getToken(user._id),
+    // });
   } else {
     res.status(400);
     throw new Error("Unable to create user");
@@ -46,7 +52,7 @@ const authUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
   if (user && (await user.verify_password(password))) {
-    const token = getToken(user._id);
+    const token = await getToken(user._id);
     res.send(token);
     // res.send({
     //   _id: user._id,

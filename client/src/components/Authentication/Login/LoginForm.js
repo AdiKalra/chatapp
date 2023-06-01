@@ -59,7 +59,7 @@ function LoginForm() {
         status: "success",
         duration: 5000,
         isClosable: true,
-        position: "top",
+        position: "bottom",
       });
       localStorage.setItem(
         "user-token",
