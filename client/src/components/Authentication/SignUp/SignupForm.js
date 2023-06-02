@@ -59,6 +59,7 @@ function SignupForm() {
         .catch((err) => {
           console.log(err);
         });
+      console.log(dp);
       setLoading(false);
       return;
     } else {
@@ -103,7 +104,9 @@ function SignupForm() {
         name,
         email,
         password,
-        dp,
+        dp: dp
+          ? dp
+          : "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
       };
       const config = {
         headers: {
@@ -115,7 +118,6 @@ function SignupForm() {
         data,
         config
       );
-      console.log(response_data);
 
       toast({
         title: "Registration Successful",
@@ -125,22 +127,22 @@ function SignupForm() {
         position: "bottom",
       });
 
-      localStorage.setItem("user-token", JSON.stringify(response_data.data));
+      localStorage.setItem("user", JSON.stringify(response_data.data));
       setLoading(false);
       navigate("/api/chat");
       return;
     } catch (err) {
-       if (err.response.status === 400) {
-         toast({
-           title: `${err.response.data.message}`,
-           duration: 2000,
-           status: "error",
-           isClosable: true,
-           position: "bottom",
-         });
-         setLoading(false);
-         return;
-       }
+      if (err.response.status === 400) {
+        toast({
+          title: `${err.response.data.message}`,
+          duration: 2000,
+          status: "error",
+          isClosable: true,
+          position: "bottom",
+        });
+        setLoading(false);
+        return;
+      }
       setLoading(false);
     }
   };
