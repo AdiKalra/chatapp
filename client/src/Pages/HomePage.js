@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function HomePage() {
   const navigate = useNavigate();
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user-token"));
+    const user = JSON.parse(localStorage.getItem("user"));
     if (user) navigate("/api/chat");
 
     // eslint-disable-next-line

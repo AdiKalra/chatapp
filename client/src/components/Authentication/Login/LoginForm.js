@@ -51,6 +51,7 @@ function LoginForm() {
         data,
         config
       );
+      console.log(response_data)
 
       setLoading(false);
 
@@ -62,7 +63,7 @@ function LoginForm() {
         position: "bottom",
       });
       localStorage.setItem(
-        "user-token",
+        "user",
         await JSON.stringify(response_data.data)
       );
 
