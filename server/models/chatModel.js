@@ -9,7 +9,6 @@ const chatSchema = mongoose.Schema(
       trim: true,
       require: true,
       index: true,
-      unique: true
     },
     users: [
       {
