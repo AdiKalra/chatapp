@@ -24,7 +24,7 @@ function SignupForm() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const updateDP = (pic) => {
+  const updateDP = async (pic) => {
     setLoading(true);
     if (pic === undefined) {
       toast({
@@ -48,18 +48,24 @@ function SignupForm() {
       data.append("upload_preset", "chatapp");
       data.append("cloud_name", "adikalra");
 
-      fetch("https://api.cloudinary.com/v1_1/adikalra/image/upload", {
-        method: "POST",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          setDp(res.url.toString());
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      console.log(dp);
+      // fetch("https://api.cloudinary.com/v1_1/adikalra/image/upload", {
+      //   method: "POST",
+      //   body: data,
+      // })
+      //   .then((res) => res.json())
+      //   .then((res) => {
+      //     setDp(res.url.toString());
+      //     console.log("dp: ", res.url.toString());
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      const result = await axios.post(
+        "https://api.cloudinary.com/v1_1/adikalra/image/upload",
+        data
+      );
+      setDp(result.data.url);
+      console.log(result);
       setLoading(false);
       return;
     } else {

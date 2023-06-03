@@ -6,6 +6,7 @@ import {
   Tooltip,
   Input,
   useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { Avatar } from "@chakra-ui/react";
@@ -31,15 +32,16 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 import axios from "axios";
-import UserSearchLoader from "../UserListItems/UserSearchLoader";
+// import UserSearchLoader from "../UserListItems/UserSearchLoader";
 import UserItem from "../UserListItems/UserItem";
+import ListLoader from "../Loader/ListLoader";
 
 function SideDrawer() {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [loadingChat, setLoadingChat] = useState(false);
-  const { User } = ChatState();
+  const [loadingChat, setLoadingChat] = useState(false);
+  const { User, setSelectedChat, chats, setChats } = ChatState();
   const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,6 +49,8 @@ function SideDrawer() {
 
   const logoutHandler = () => {
     localStorage.removeItem("user");
+    setChats([]);
+    setSelectedChat()
     navigate("/");
     toast({
       title: "Logout Successful",
@@ -116,7 +120,42 @@ function SideDrawer() {
     setLoading(false);
     onClose();
   };
-  const access = (_id) => {};
+  const access = async (userId) => {
+    try {
+      setLoadingChat(true);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${User.token}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        "http://localhost:8000/api/chat/",
+        { userId },
+        config
+      );
+      console.log(data);
+
+      if (!chats.find((c) => c._id === userId)) {
+        setChats([data, ...chats]);
+      }
+
+      setSelectedChat(data);
+      onClose();
+      setLoadingChat(false);
+      handleCancel();
+    } catch (err) {
+      toast({
+        title: "Error fetching the chat",
+        status: "error",
+        description: err.message,
+        duration: 2000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
+  };
   const Results = searchResult ? (
     searchResult.map((user) => {
       return (
@@ -145,7 +184,7 @@ function SideDrawer() {
             <Button
               color="#0B2447"
               variant={"outline"}
-              leftIcon={<i class="fa-solid fa-magnifying-glass" />}
+              leftIcon={<i className="fa-solid fa-magnifying-glass" />}
               ref={btnRef}
               onClick={onOpen}
             >
@@ -211,9 +250,13 @@ function SideDrawer() {
       <Drawer
         isOpen={isOpen}
         placement="left"
-        onClose={onClose}
+        onClose={() => {
+          handleCancel();
+          onClose();
+        }}
         finalFocusRef={btnRef}
         size={"sm"}
+        allowPinchZoom
       >
         <DrawerOverlay />
         <DrawerContent>
@@ -234,7 +277,7 @@ function SideDrawer() {
             <Box display={"flex"} justifyContent={"center"} gap={"5px"}>
               <Input
                 placeholder="Type name or email here..."
-                value={search}
+                value={search || ""}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </Box>
@@ -248,7 +291,19 @@ function SideDrawer() {
               ) : (
                 "No result found"
               )}*/}
-              {loading ? <UserSearchLoader /> : search ? Results : ""}
+              {loading ? <ListLoader /> : search ? Results : ""}
+              {loadingChat ? (
+                <Spinner
+                  ml={"150px"}
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="xl"
+                />
+              ) : (
+                ""
+              )}
             </Box>
           </DrawerBody>
 

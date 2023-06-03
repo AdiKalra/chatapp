@@ -1,8 +1,8 @@
 import { ChatState } from "../Context/chatProvider";
 import { Box } from "@chakra-ui/react";
 import SideDrawer from "../components/Chat Page/SideDrawer";
-import MyChats from "../components/Chat Page/MyChats";
 import ChatBox from "../components/Chat Page/ChatBox";
+import AllChats from "../components/Chat Page/AllChats";
 export default function ChatPage(props) {
   const { User } = ChatState();
   return (
@@ -18,7 +18,7 @@ export default function ChatPage(props) {
         padding={"30px"}
         gap={"50px"}
       >
-        {User && <MyChats />}
+        {User && <AllChats />}
         {User && <ChatBox />}
       </Box>
     </div>
