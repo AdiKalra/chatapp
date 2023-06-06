@@ -41,7 +41,7 @@ function SideDrawer() {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
-  const { User, setSelectedChat, chats, setChats } = ChatState();
+  const { User, setSelectedChat, selectedChat, chats, setChats } = ChatState();
   const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -50,7 +50,7 @@ function SideDrawer() {
   const logoutHandler = () => {
     localStorage.removeItem("user");
     setChats([]);
-    setSelectedChat()
+    setSelectedChat();
     navigate("/");
     toast({
       title: "Logout Successful",
@@ -60,6 +60,10 @@ function SideDrawer() {
       position: "top",
     });
   };
+
+  // useEffect(() => {
+  //   console.log("chat: ", chats);
+  // }, [chats]);
 
   // const handleSubmit = async () => {
   //   setLoading(true);
@@ -120,6 +124,7 @@ function SideDrawer() {
     setLoading(false);
     onClose();
   };
+
   const access = async (userId) => {
     try {
       setLoadingChat(true);
@@ -129,18 +134,13 @@ function SideDrawer() {
           Authorization: `Bearer ${User.token}`,
         },
       };
-
       const { data } = await axios.post(
         "http://localhost:8000/api/chat/",
         { userId },
         config
       );
-      console.log(data);
-
-      if (!chats.find((c) => c._id === userId)) {
-        setChats([data, ...chats]);
-      }
-
+      if (!chats.find((c) => c._id === userId))
+        setChats((prev) => [data, ...prev]);
       setSelectedChat(data);
       onClose();
       setLoadingChat(false);

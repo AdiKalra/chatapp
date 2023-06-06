@@ -5,6 +5,7 @@ import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import ListLoader from "../Loader/ListLoader";
 import { getSender } from "../../config/ChatLogic";
+import GroupChatModal from "./GroupChatModal";
 
 function AllChats() {
   const { User, selectedChat, setSelectedChat, chats, setChats } = ChatState();
@@ -13,6 +14,7 @@ function AllChats() {
   const toast = useToast();
 
   const fetchChats = async () => {
+    setLoggedUser(JSON.parse(localStorage.getItem("user")));
     try {
       const config = {
         headers: {
@@ -24,12 +26,10 @@ function AllChats() {
         "http://localhost:8000/api/chat/",
         config
       );
-
       setChats(data);
-      console.log(data);
     } catch (error) {
       toast({
-        title: "Error Occure",
+        title: "Error Occured",
         description: error.message,
         duration: 5000,
         isClosable: true,
@@ -40,12 +40,10 @@ function AllChats() {
   };
 
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("user")));
     fetchChats();
     // eslint-disable-next-line
   }, []);
 
-  
   return (
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
@@ -68,15 +66,17 @@ function AllChats() {
         borderColor={"#0c2347"}
       >
         <Text fontSize="22px">All Chats</Text>
-        <Button display={"flex"} gap={2} p={"0px 15px"}>
-          <Text
-            fontSize="17px"
-            display={{ base: "none", md: "none", lg: "flex" }}
-          >
-            New Group Chat
-          </Text>
-          <AddIcon />
-        </Button>
+        <GroupChatModal>
+          <Button display={"flex"} gap={2} p={"0px 15px"}>
+            <Text
+              fontSize="17px"
+              display={{ base: "none", md: "none", lg: "flex" }}
+            >
+              New Group Chat
+            </Text>
+            <AddIcon />
+          </Button>
+        </GroupChatModal>
       </Box>
       <Box
         display={"flex"}
@@ -87,8 +87,9 @@ function AllChats() {
         h={"100%"}
         overflowY={"hidden"}
       >
-        {chats.length > 0 ? (
+        {chats ? (
           <Stack overflowY={"scroll"}>
+            {console.log(chats)}
             {chats.map((chat) => {
               return (
                 <Box
