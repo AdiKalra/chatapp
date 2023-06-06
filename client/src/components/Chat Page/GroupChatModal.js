@@ -22,7 +22,7 @@ import UserBadgeItem from "../UserListItems/UserBadgeItem";
 
 function GroupChatModal({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { User, chats, setChats } = ChatState();
+  const { User, chats, setChats, setSelectedChat } = ChatState();
   const [groupChatName, setGroupChatName] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [search, setSearch] = useState();
@@ -72,8 +72,8 @@ function GroupChatModal({ children }) {
       });
       return;
     }
+    setSearch();
     setSelectedUsers([...selectedUsers, user]);
-    console.log(selectedUsers);
   };
   const handleClose = () => {
     setLoading(false);
@@ -87,7 +87,9 @@ function GroupChatModal({ children }) {
     const participants = selectedUsers.filter((sel) => sel._id !== delUser._id);
     setSelectedUsers(participants);
   };
-  const handleSubmit = () => {
+
+  const handleSubmit = async () => {
+    setLoading(true);
     if (!groupChatName) {
       toast({
         title: "Please enter group name",
@@ -96,6 +98,7 @@ function GroupChatModal({ children }) {
         isClosable: true,
         position: "top",
       });
+      setLoading(false);
       return;
     }
     if (selectedUsers.length < 2) {
@@ -106,10 +109,39 @@ function GroupChatModal({ children }) {
         isClosable: true,
         position: "top",
       });
+      setLoading(false);
       return;
     }
     try {
-      
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${User.token}`,
+        },
+      };
+
+      const groupData = {
+        name: groupChatName,
+        users: selectedUsers,
+      };
+      const { data } = await axios.post(
+        "http://localhost:8000/api/chat/group",
+        groupData,
+        config
+      );
+
+      setChats([data, ...chats]);
+      setSelectedChat(data);
+      setLoading(false);
+      handleClose();
+
+      toast({
+        title: "Group Created",
+        status: "success",
+        duration: 1000,
+        isClosable: true,
+        position: "top",
+      });
     } catch (err) {}
   };
 
