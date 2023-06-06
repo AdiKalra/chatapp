@@ -19,34 +19,37 @@ const accessChat = asyncHandler(async (req, res) => {
     .populate("users", "-password")
     .populate("latestMessage");
 
-  isChat = await User.populate(isChat, {
-    path: "latestMessage.sender",
-    select: "name email dp",
-  });
+    console.log(isChat);
 
-  if (isChat.length > 0) {
-    res.send(isChat);
-  } else {
-    let user = (await User.find({ _id: userId }))[0];
-    let newChatData = {
-      chatName: user.name,
-      isGrouped: false,
-      users: [req.user._id, userId],
-    };
-    try {
-      const newChat = await Chat.create(newChatData);
+    if (isChat.length) {
+      console.log("found chat");
+      isChat = await User.populate(isChat, {
+        path: "latestMessage.sender",
+        select: "name email dp",
+      });
+      console.log(isChat);
+      return res.send(isChat);
+    } else {
+      let user = (await User.find({ _id: userId }))[0];
+      let newChatData = {
+        chatName: user.name,
+        isGrouped: false,
+        users: [req.user._id, userId],
+      };
+      try {
+        const newChat = await Chat.create(newChatData);
 
-      const fullChat = await Chat.findOne({ _id: newChat._id }).populate(
-        "users",
-        "-password"
-      );
-      console.log("Chat Created");
-      res.send(fullChat);
-    } catch (err) {
-      res.status(400);
-      throw new Error(err.message);
+        const fullChat = await Chat.findOne({ _id: newChat._id }).populate(
+          "users",
+          "-password"
+        );
+        console.log("Chat Created");
+        res.send(fullChat);
+      } catch (err) {
+        res.status(400);
+        throw new Error(err.message);
+      }
     }
-  }
 });
 
 const fetchChat = asyncHandler(async (req, res) => {

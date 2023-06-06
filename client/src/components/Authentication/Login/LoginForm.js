@@ -88,6 +88,7 @@ function LoginForm() {
           placeholder="Enter your Email Address"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          type={"email"}
           mb={"15px"}
         ></Input>
       </FormControl>
