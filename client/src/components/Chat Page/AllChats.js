@@ -89,7 +89,6 @@ function AllChats() {
       >
         {chats ? (
           <Stack overflowY={"scroll"}>
-            {console.log(chats)}
             {chats.map((chat) => {
               return (
                 <Box

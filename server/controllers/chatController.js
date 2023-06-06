@@ -65,15 +65,16 @@ const fetchChat = asyncHandler(async (req, res) => {
 });
 
 const createGroupChat = asyncHandler(async (req, res) => {
+  console.log("create groupchat fn called");
   if (!req.body.users || !req.body.name) {
     res.status(400);
     return res.send({ message: "Please fill all the fields" });
   }
-  // let users = JSON.parse(res.body.users);
+
   let users = req.body.users;
   if (users.length < 2) {
     res.status(400);
-    return res.send("More than two users are required");
+    return res.send("More than two users are required to create a group chat");
   }
 
   users.push(req.user._id);
@@ -87,18 +88,13 @@ const createGroupChat = asyncHandler(async (req, res) => {
     };
 
     const groupchat = await Chat.create(newgroup);
-    const fullgpchat = await User.populate(groupchat, {
+    const gpChat = await User.populate(groupchat, {
       path: "users",
       select: "-password",
     });
+    const fullGroupChat = await gpChat.populate("admin", "-password");
 
-    // OR
-    // const fullgpchat = await User.populate(groupchat, {
-    //   path: "users",
-    //   select: "-password"
-    // })
-
-    res.status(200).json(await fullgpchat.populate("admin", "-password"));
+    res.status(200).json(fullGroupChat);
   } catch (err) {
     res.status(400);
     throw new Error(err.message);
