@@ -1,23 +1,24 @@
-import React from "react";
+import { ViewIcon } from "@chakra-ui/icons";
 import {
+  Avatar,
+  Button,
+  IconButton,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
-  useDisclosure,
-  IconButton,
-  Avatar,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { ViewIcon } from "@chakra-ui/icons";
+import React from "react";
+import { ChatState } from "../../Context/chatProvider";
 
-
-function ProfileModal({ user, children }) {
+function GroupProfileModal({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { User } = ChatState();
   return (
     <>
       {children ? (
@@ -37,6 +38,7 @@ function ProfileModal({ user, children }) {
           onClick={onOpen}
         />
       )}
+
       <span onClick={onOpen}>
         <div>
           <Modal isOpen={isOpen} onClose={onClose}>
@@ -60,14 +62,14 @@ function ProfileModal({ user, children }) {
                 alignItems={"center"}
                 gap={"15px"}
               >
-                <Text fontSize={"24px"}>{user.name}</Text>
+                <Text fontSize={"24px"}>{User.name}</Text>
                 <Avatar
                   icon={<i class="fa-regular fa-user" />}
                   size="2xl"
-                  name={user.name}
-                  src={user.dp}
+                  name={User.name}
+                  src={User.dp}
                 />
-                <Text fontSize={"24px"}>{user.email}</Text>
+                <Text fontSize={"24px"}>{User.email}</Text>
               </ModalBody>
 
               <ModalFooter>
@@ -86,4 +88,4 @@ function ProfileModal({ user, children }) {
   );
 }
 
-export default ProfileModal;
+export default GroupProfileModal;

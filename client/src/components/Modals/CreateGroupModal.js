@@ -20,7 +20,7 @@ import axios from "axios";
 import UserItem from "../UserListItems/UserItem";
 import UserBadgeItem from "../UserListItems/UserBadgeItem";
 
-function GroupChatModal({ children }) {
+function CreateGroupModal({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { User, chats, setChats, setSelectedChat } = ChatState();
   const [groupChatName, setGroupChatName] = useState();
@@ -237,44 +237,4 @@ function GroupChatModal({ children }) {
   );
 }
 
-export default GroupChatModal;
-
-// <ModalOverlay />
-// <ModalContent
-//   display={"flex"}
-//   flexDirection={"column"}
-//   justifyContent={"center"}
-//   alignItems={"center"}
-//   p={"25px 5px 25px 5px"}
-// >
-//   <ModalHeader>
-//     <Text fontSize={"24px"}>Profile</Text>
-//     <ModalCloseButton />
-//   </ModalHeader>
-
-//   <ModalBody
-//     display={"flex"}
-//     flexDirection={"column"}
-//     justifyContent={"center"}
-//     alignItems={"center"}
-//     gap={"15px"}
-//   >
-//     <Text fontSize={"24px"}>{User.name}</Text>
-//     <Avatar
-//       icon={<i class="fa-regular fa-user" />}
-//       size="2xl"
-//       name={User.name}
-//       src={User.dp}
-//     />
-//     <Text fontSize={"24px"}>{User.email}</Text>
-//   </ModalBody>
-
-//   <ModalFooter>
-//     <Button colorScheme="blue" mr={3}>
-//       Edit Profile
-//     </Button>
-//     <Button colorScheme="red" mr={3} onClick={onClose}>
-//       Close
-//     </Button>
-//   </ModalFooter>
-// </ModalContent>
+export default CreateGroupModal;
