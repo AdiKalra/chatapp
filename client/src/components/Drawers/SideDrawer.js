@@ -21,7 +21,7 @@ import {
   MenuDivider,
 } from "@chakra-ui/react";
 import { ChatState } from "../../Context/chatProvider";
-import ProfileModal from "./ProfileModal";
+import ProfileModal from "../Modals/ProfileModal";
 import {
   Drawer,
   DrawerBody,
@@ -32,7 +32,6 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 import axios from "axios";
-// import UserSearchLoader from "../UserListItems/UserSearchLoader";
 import UserItem from "../UserListItems/UserItem";
 import ListLoader from "../Loader/ListLoader";
 

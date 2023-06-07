@@ -5,9 +5,9 @@ import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import ListLoader from "../Loader/ListLoader";
 import { getSender } from "../../config/ChatLogic";
-import GroupChatModal from "./GroupChatModal";
+import GroupChatModal from "../Modals/GroupChatModal";
 
-function AllChats() {
+function AllChats({ fetchAgain }) {
   const { User, selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const [loggedUser, setLoggedUser] = useState();
 
@@ -42,7 +42,7 @@ function AllChats() {
   useEffect(() => {
     fetchChats();
     // eslint-disable-next-line
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <Box

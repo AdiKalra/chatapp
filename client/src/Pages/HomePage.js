@@ -1,7 +1,7 @@
 import { Container, Box, Text } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import LoginForm from "../components/Authentication/Login/LoginForm";
-import SignupForm from "../components/Authentication/SignUp/SignupForm";
+import LoginForm from "../components/Auth/LoginForm";
+import SignupForm from "../components/Auth/SignupForm";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
