@@ -129,7 +129,7 @@ function SideDrawer() {
       setLoadingChat(true);
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           Authorization: `Bearer ${User.token}`,
         },
       };
@@ -138,9 +138,12 @@ function SideDrawer() {
         { userId },
         config
       );
-      if (!chats.find((c) => c._id === userId))
-        setChats((prev) => [data, ...prev]);
+
       setSelectedChat(data);
+      if (!chats.find((c) => c._id === userId))
+        // setChats((prev) => [data, ...prev]);
+        setChats([data, ...chats]);
+
       onClose();
       setLoadingChat(false);
       handleCancel();
@@ -235,7 +238,7 @@ function SideDrawer() {
                 </MenuItem>
               </MenuGroup>
               <MenuDivider />
-              <ProfileModal>
+              <ProfileModal user={User}>
                 <MenuItem>Profile</MenuItem>
               </ProfileModal>
               <MenuItem onClick={logoutHandler} color={"red"}>

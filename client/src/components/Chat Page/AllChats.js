@@ -5,7 +5,7 @@ import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import ListLoader from "../Loader/ListLoader";
 import { getSender } from "../../config/ChatLogic";
-import GroupChatModal from "../Modals/GroupChatModal";
+import CreateGroupModal from "../Modals/CreateGroupModal";
 
 function AllChats({ fetchAgain }) {
   const { User, selectedChat, setSelectedChat, chats, setChats } = ChatState();
@@ -66,7 +66,7 @@ function AllChats({ fetchAgain }) {
         borderColor={"#0c2347"}
       >
         <Text fontSize="22px">All Chats</Text>
-        <GroupChatModal>
+        <CreateGroupModal>
           <Button display={"flex"} gap={2} p={"0px 15px"}>
             <Text
               fontSize="17px"
@@ -76,7 +76,7 @@ function AllChats({ fetchAgain }) {
             </Text>
             <AddIcon />
           </Button>
-        </GroupChatModal>
+        </CreateGroupModal>
       </Box>
       <Box
         display={"flex"}
@@ -105,7 +105,7 @@ function AllChats({ fetchAgain }) {
                 >
                   <Text>
                     {!chat.isGrouped
-                      ? getSender(loggedUser, chat.users)
+                      ? getSender(loggedUser, chat.users).name
                       : chat.chatName}
                   </Text>
                 </Box>
