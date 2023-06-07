@@ -15,6 +15,8 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 import { ChatState } from "../../Context/chatProvider";
+
+
 function ProfileModal({ user, children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { User } = ChatState();
@@ -25,6 +27,14 @@ function ProfileModal({ user, children }) {
       ) : (
         <IconButton
           display={{ base: "flex" }}
+          justifyContent={"center"}
+          alignItems={"center"}
+          w={"40px"}
+          h={"40px"}
+          borderRadius={"lg"}
+          _hover={{ color: "#fff", bgColor: "#0B2447" }}
+          cursor={"pointer"}
+          _active={{ transform: "scale(0.9)" }}
           icon={<ViewIcon />}
           onClick={onOpen}
         />
