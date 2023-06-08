@@ -56,7 +56,9 @@ const fetchChat = asyncHandler(async (req, res) => {
   try {
     const result = await Chat.find({
       users: { $elemMatch: { $eq: req.user._id } },
-    }).populate("users", "-password");
+    })
+      .populate("users", "-password")
+      .populate("admin", "-password");
     res.send(result);
   } catch (err) {
     res.status(400);
@@ -77,7 +79,7 @@ const createGroupChat = asyncHandler(async (req, res) => {
     return res.send("More than two users are required to create a group chat");
   }
 
-  users.push(req.user._id);
+  users.push(req.user);
 
   try {
     const newgroup = {
@@ -121,12 +123,12 @@ const renameChat = asyncHandler(async (req, res) => {
 });
 
 const addToGroupChat = asyncHandler(async (req, res) => {
-  const { userId, chatId } = req.body;
+  const { users, chatId } = req.body;
 
   const updatedChat = await Chat.findOneAndUpdate(
     { _id: chatId, isGrouped: true },
     {
-      $addToSet: { users: userId },
+      $addToSet: { users: users },
     },
     { new: true }
   )
@@ -141,12 +143,12 @@ const addToGroupChat = asyncHandler(async (req, res) => {
 });
 
 const removeFromGroupChat = asyncHandler(async (req, res) => {
-  const { userId, chatId } = req.body;
+  const { users, chatId } = req.body;
 
   const updatedChat = await Chat.findOneAndUpdate(
     { _id: chatId, isGrouped: true },
     {
-      $pull: { users: userId },
+      $pull: { users: users },
     },
     {
       new: true,

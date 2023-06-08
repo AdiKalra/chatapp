@@ -8,7 +8,7 @@ export default function ChatPage(props) {
   const { User, setUser, selectedChat, setSelectedChat, chats, setChats } =
     ChatState();
 
-    const [fetchAgain, setFetchAgain] = useState(false )
+    const [fetchAgain, setFetchAgain] = useState(false)
   return (
     <div>
       {User && <SideDrawer />}
