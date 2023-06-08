@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { ChatState } from "../../Context/chatProvider";
-import { Avatar, Box, Text } from "@chakra-ui/react";
+import { Avatar, Box, Text, useToast } from "@chakra-ui/react";
 import ProfileModal from "../Modals/ProfileModal";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { getSender } from "../../config/ChatLogic";
@@ -8,7 +8,7 @@ import GroupProfileModal from "../Modals/GroupProfileModal";
 
 function SingleChat({ fetchAgain, setFetchAgain }) {
   const { User, selectedChat, setSelectedChat } = ChatState();
-
+  
   // const getChatName = () => {
   //   const users = selectedChat.users;
   //   return users[0]._id === User._id
@@ -23,7 +23,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   return (
     <>
       {selectedChat ? (
-        <Box>
+        <>
           <Box ml={"20px"} display={"flex"} justifyContent={"space-between"}>
             <Box
               display={"flex"}
@@ -71,13 +71,27 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
             </Box>
             <Box>
               {selectedChat.isGrouped ? (
-                <GroupProfileModal />
+                <GroupProfileModal
+                  fetchAgain={fetchAgain}
+                  setFetchAgain={setFetchAgain}
+                />
               ) : (
                 <ProfileModal user={getSender(User, selectedChat.users)} />
               )}
             </Box>
           </Box>
-        </Box>
+
+          <Box
+            h={"100%"}
+            bgColor={"#edf2f6"}
+            color={"#0B2447"}
+            borderRadius={"lg"}
+            p={5}
+          >
+            {/* Input Box */}
+            {/* Chats */}
+          </Box>
+        </>
       ) : (
         <Box
           display={"flex"}
@@ -86,7 +100,11 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
           alignItems={"center"}
           h={"100%"}
           w={"100%"}
+          p={5}
           pb={"80px"}
+          bgColor={"#edf2f6"}
+          color={"#0B2447"}
+          borderRadius={"lg"}
         >
           <Text fontSize={"60px"}>CHAT APP</Text>
           <Text fontSize={"26px"}>Click on user to start chatting.</Text>

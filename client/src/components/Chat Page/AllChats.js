@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../../Context/chatProvider";
-import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
+import { Avatar, Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import ListLoader from "../Loader/ListLoader";
@@ -92,17 +92,33 @@ function AllChats({ fetchAgain }) {
             {chats.map((chat) => {
               return (
                 <Box
+                  display={"flex"}
+                  alignItems={"center"}
+                  gap={"20px"}
                   key={chat._id}
                   onClick={() => {
                     setSelectedChat(chat);
                   }}
                   cursor={"pointer"}
-                  bgColor={selectedChat === chat ? "#0B2447" : "#edf2f6"}
-                  color={selectedChat === chat ? "#fff" : "#0B2447"}
+                  bgColor={
+                    selectedChat && selectedChat._id === chat._id
+                      ? "#0B2447"
+                      : "#edf2f6"
+                  }
+                  color={
+                    selectedChat && selectedChat._id === chat._id
+                      ? "#fff"
+                      : "#0B2447"
+                  }
                   px={3}
                   py={2}
                   borderRadius={"lg"}
                 >
+                  <Avatar
+                    size={"md"}
+                    name={getSender(loggedUser, chat.users).name}
+                    src={getSender(loggedUser, chat.users).dp}
+                  />
                   <Text>
                     {!chat.isGrouped
                       ? getSender(loggedUser, chat.users).name

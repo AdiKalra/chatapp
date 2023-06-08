@@ -4,11 +4,12 @@ import { ChatState } from "../../Context/chatProvider";
 import SingleChat from "./SingleChat";
 
 function ChatBox({ fetchAgain, setFetchAgain }) {
-  const { User, selectedChat, setSelectedChat, chats, setChats } = ChatState();
+  const { selectedChat } = ChatState();
   return (
     <Box
       display={{ base: selectedChat ? "flex" : "none", md: "flex" }}
       flexDirection={"column"}
+      gap={"20px"}
       p={"20px"}
       bgColor={"#fff"}
       w={{ base: "100%", md: "70%" }}
@@ -16,7 +17,7 @@ function ChatBox({ fetchAgain, setFetchAgain }) {
       borderWidth={"1px"}
       h={"100%"}
     >
-      <SingleChat fetchAgain setFetchAgain/>
+      <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
     </Box>
   );
 }

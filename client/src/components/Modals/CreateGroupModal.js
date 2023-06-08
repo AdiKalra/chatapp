@@ -19,6 +19,7 @@ import { ChatState } from "../../Context/chatProvider";
 import axios from "axios";
 import UserItem from "../UserListItems/UserItem";
 import UserBadgeItem from "../UserListItems/UserBadgeItem";
+import SpinnerLoader from "../Loader/SpinnerLoader";
 
 function CreateGroupModal({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -75,6 +76,7 @@ function CreateGroupModal({ children }) {
     setSearch();
     setSelectedUsers([...selectedUsers, user]);
   };
+
   const handleClose = () => {
     setLoading(false);
     setSearch();
@@ -83,6 +85,7 @@ function CreateGroupModal({ children }) {
     setGroupChatName();
     onClose();
   };
+
   const handleDelete = (delUser) => {
     const participants = selectedUsers.filter((sel) => sel._id !== delUser._id);
     setSelectedUsers(participants);
@@ -203,7 +206,7 @@ function CreateGroupModal({ children }) {
             </Box>
 
             {loading ? (
-              <div>Loading</div>
+              <SpinnerLoader />
             ) : (
               searchResults
                 .slice(0, 4)
