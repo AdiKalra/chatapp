@@ -26,7 +26,7 @@ import SpinnerLoader from "../Loader/SpinnerLoader";
 function GroupProfileModal({ fetchAgain, setFetchAgain }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { User, selectedChat, setSelectedChat } = ChatState();
-  const [groupChatName, setGroupChatName] = useState(selectedChat.chatName);
+  const [groupChatName, setGroupChatName] = useState();
   const [search, setSearch] = useState();
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -222,6 +222,7 @@ function GroupProfileModal({ fetchAgain, setFetchAgain }) {
     setLoading(false);
     setSearch();
     setSearchResults([]);
+    setGroupChatName()
     onClose();
   };
 

@@ -7,6 +7,6 @@ const {
 } = require("../controllers/messageController");
 
 router.post("/", protect, sendMessage);
-router.get("/", protect, fetchAllMessages);
+router.get("/:chatId", protect, fetchAllMessages);
 
 module.exports = router;

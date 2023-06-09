@@ -19,7 +19,6 @@ const accessChat = asyncHandler(async (req, res) => {
     .populate("users", "-password")
     .populate("latestMessage");
 
-    console.log(isChat);
 
     if (isChat.length) {
       console.log("found chat");
@@ -58,7 +57,16 @@ const fetchChat = asyncHandler(async (req, res) => {
       users: { $elemMatch: { $eq: req.user._id } },
     })
       .populate("users", "-password")
-      .populate("admin", "-password");
+      .populate("admin", "-password")
+      .populate("latestMessage")
+      .sort({ updatedAt: -1 })
+      .then(async (results) => {
+        return await User.populate(results, {
+          path: "latestMessage.sender",
+          select: "name pic email",
+        });
+        
+      });
     res.send(result);
   } catch (err) {
     res.status(400);
