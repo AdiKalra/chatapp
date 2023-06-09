@@ -24,7 +24,7 @@ function LoginForm() {
     setLoading(true);
     if (!email || !password) {
       toast({
-        title: "All fields are requires",
+        title: "All fields are required",
         status: "warning",
         duration: 2000,
         isClosable: true,
