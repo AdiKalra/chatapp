@@ -7,6 +7,7 @@ const connectDB = require("./config/db");
 // const path = require("path");
 const userRoutes = require("./router/userRoutes");
 const chatRoutes = require("./router/chatRoutes");
+const messageRoutes = require("./router/messageRoutes");
 const { not_found, error_handling } = require("./middleware/error_middleware");
 // const User = require("./models/userModel");
 
@@ -16,6 +17,7 @@ app.use(express.json());
 connectDB();
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 app.use(not_found);
 app.use(error_handling);
 

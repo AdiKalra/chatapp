@@ -67,7 +67,7 @@ function GroupProfileModal({ fetchAgain, setFetchAgain }) {
       setRenameLoading(false);
 
       toast({
-        title: "Group name updated successfully",
+        title: "Group name successfully updated ",
         status: "success",
         duration: 2000,
         isClosable: true,
@@ -75,7 +75,7 @@ function GroupProfileModal({ fetchAgain, setFetchAgain }) {
       });
     } catch (err) {
       toast({
-        title: "Group name updated successfully",
+        title: "Group name successfully updated",
         status: "success",
         duration: 2000,
         isClosable: true,
