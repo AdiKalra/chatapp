@@ -30,7 +30,12 @@ const sendMessage = asyncHandler(async (req, res) => {
 });
 
 const fetchAllMessages = asyncHandler(async (req, res) => {
-  res.send("fetch all messages route called");
+  try {
+    const messages = await Message.find({ chat: req.params.chatId })
+      .populate("sender", "name email dp")
+      .populate("chat");
+    res.send(messages);
+  } catch (err) {}
 });
 
 module.exports = { sendMessage, fetchAllMessages };
