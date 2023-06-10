@@ -1,96 +1,85 @@
 import React, { useState } from "react";
 import { ChatState } from "../../Context/chatProvider";
-import { Avatar, Box, Text, useToast } from "@chakra-ui/react";
+import { Avatar, Box, Spinner, Text, useToast } from "@chakra-ui/react";
 import ProfileModal from "../Modals/ProfileModal";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { getSender } from "../../config/ChatLogic";
 import GroupProfileModal from "../Modals/GroupProfileModal";
+import ChatBoxHeader from "./ChatBoxHeader";
+import ChatBoxBody from "./ChatBoxBody";
 
 function SingleChat({ fetchAgain, setFetchAgain }) {
   const { User, selectedChat, setSelectedChat } = ChatState();
-  
-  // const getChatName = () => {
-  //   const users = selectedChat.users;
-  //   return users[0]._id === User._id
-  //     ? users[1].name.toUpperCase()
-  //     : users[0].name.toUpperCase();
-  // };
 
-  // const getChatDP = () => {
-  //   const users = selectedChat.users;
-  //   return users[0]._id === User._id ? users[1].dp : users[0].dp;
-  // };
+  const [loading, setLoading] = useState(true);
+
   return (
     <>
       {selectedChat ? (
         <>
-          <Box ml={"20px"} display={"flex"} justifyContent={"space-between"}>
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              gap={"30px"}
-              justifyContent={"space-between"}
-            >
-              <Box
-                display={{ base: "flex", md: "none" }}
-                justifyContent={"center"}
-                alignItems={"center"}
-                fontSize={"30px"}
-                color={"#0B2447"}
-                bgColor={"#edf2f6"}
-                w={"40px"}
-                h={"40px"}
-                borderRadius={"lg"}
-                _hover={{ color: "#fff", bgColor: "#0B2447" }}
-                cursor={"pointer"}
-                _active={{ transform: "scale(0.9)" }}
-                onClick={() => {
-                  setSelectedChat("");
-                }}
-              >
-                <ChevronLeftIcon />
-              </Box>
-              <Avatar
-                size="md"
-                name={
-                  selectedChat.isGrouped
-                    ? selectedChat.chatName
-                    : getSender(User, selectedChat.users).name
-                }
-                src={
-                  selectedChat.isGrouped
-                    ? ""
-                    : getSender(User, selectedChat.users).dp
-                }
-              />
-              <Text fontSize={"24px"}>
-                {selectedChat.isGrouped
-                  ? selectedChat.chatName.toUpperCase()
-                  : getSender(User, selectedChat.users).name.toUpperCase()}
-              </Text>
-            </Box>
-            <Box>
-              {selectedChat.isGrouped ? (
-                <GroupProfileModal
-                  fetchAgain={fetchAgain}
-                  setFetchAgain={setFetchAgain}
-                />
-              ) : (
-                <ProfileModal user={getSender(User, selectedChat.users)} />
-              )}
-            </Box>
-          </Box>
-
+          <ChatBoxHeader
+            fetchAgain={fetchAgain}
+            setFetchAgain={setFetchAgain}
+            
+          />
+          {/* <Box ml={"20px"} display={"flex"} justifyContent={"space-between"}>
           <Box
-            h={"100%"}
-            bgColor={"#edf2f6"}
-            color={"#0B2447"}
-            borderRadius={"lg"}
-            p={5}
+            display={"flex"}
+            alignItems={"center"}
+            gap={"30px"}
+            justifyContent={"space-between"}
           >
-            {/* Input Box */}
-            {/* Chats */}
+            <Box
+              display={{ base: "flex", md: "none" }}
+              justifyContent={"center"}
+              alignItems={"center"}
+              fontSize={"30px"}
+              color={"#0B2447"}
+              bgColor={"#edf2f6"}
+              w={"40px"}
+              h={"40px"}
+              borderRadius={"lg"}
+              _hover={{ color: "#fff", bgColor: "#0B2447" }}
+              cursor={"pointer"}
+              _active={{ transform: "scale(0.9)" }}
+              onClick={() => {
+                setSelectedChat("");
+              }}
+            >
+              <ChevronLeftIcon />
+            </Box>
+            <Avatar
+              size="md"
+              name={
+                selectedChat.isGrouped
+                  ? selectedChat.chatName
+                  : getSender(User, selectedChat.users).name
+              }
+              src={
+                selectedChat.isGrouped
+                  ? ""
+                  : getSender(User, selectedChat.users).dp
+              }
+            />
+            <Text fontSize={"24px"}>
+              {selectedChat.isGrouped
+                ? selectedChat.chatName.toUpperCase()
+                : getSender(User, selectedChat.users).name.toUpperCase()}
+            </Text>
           </Box>
+          <Box>
+            {selectedChat.isGrouped ? (
+              <GroupProfileModal
+                fetchAgain={fetchAgain}
+                setFetchAgain={setFetchAgain}
+              />
+            ) : (
+              <ProfileModal user={getSender(User, selectedChat.users)} />
+            )}
+          </Box>
+        </Box>*/}
+
+          <ChatBoxBody />
         </>
       ) : (
         <Box
