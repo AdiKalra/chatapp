@@ -8,6 +8,7 @@ import { Avatar, Box, Text, useToast } from "@chakra-ui/react";
 
 function ChatBoxHeader({ fetchAgain, setFetchAgain }) {
   const { User, selectedChat, setSelectedChat } = ChatState();
+  
   return (
     <>
       <Box ml={"20px"} display={"flex"} justifyContent={"space-between"}>

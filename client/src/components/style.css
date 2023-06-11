@@ -1,5 +1,5 @@
 .messages{
-    min-width: "100%";
-    height: auto;
+
     width: "100%";
+    overflow-y:scroll
 }
