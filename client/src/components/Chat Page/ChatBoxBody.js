@@ -101,7 +101,8 @@ function ChatBoxBody() {
         display={"flex"}
         flexDirection={"column"}
         justifyContent={"end"}
-        h={"100%"}
+        maxH={"85%"}
+        h={"85%"}
         bgColor={"#edf2f6"}
         color={"#0B2447"}
         borderRadius={"lg"}

@@ -98,6 +98,7 @@ function AllChats({ fetchAgain }) {
                   key={chat._id}
                   onClick={() => {
                     setSelectedChat(chat);
+                    
                   }}
                   cursor={"pointer"}
                   bgColor={
