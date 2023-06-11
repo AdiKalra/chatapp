@@ -103,6 +103,7 @@ function SideDrawer() {
         };
         const result = await axios.get(
           `http://localhost:8000/api/user?search=${search}`,
+          // `/api/user?search=${search}`,
           config
         );
         setSearchResult(result.data);
@@ -135,6 +136,7 @@ function SideDrawer() {
       };
       const { data } = await axios.post(
         "http://localhost:8000/api/chat/",
+        // "/api/chat/",
         { userId },
         config
       );

@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { ChatState } from "../../Context/chatProvider";
-import { Avatar, Box, Spinner, Text, useToast } from "@chakra-ui/react";
-import ProfileModal from "../Modals/ProfileModal";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
-import { getSender } from "../../config/ChatLogic";
-import GroupProfileModal from "../Modals/GroupProfileModal";
+import { Box, Text } from "@chakra-ui/react";
 import ChatBoxHeader from "./ChatBoxHeader";
 import ChatBoxBody from "./ChatBoxBody";
 

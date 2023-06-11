@@ -38,6 +38,7 @@ function ChatBoxBody() {
 
       const { data } = await axios.get(
         `http://localhost:8000/api/message/${selectedChat._id}`,
+        // `/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -71,6 +72,7 @@ function ChatBoxBody() {
         setNewMessage("");
         const { data } = await axios.post(
           "http://localhost:8000/api/message",
+          // "/api/message",
           { content: newMessage, chatId: selectedChat._id },
           config
         );
@@ -106,7 +108,10 @@ function ChatBoxBody() {
         bgColor={"#edf2f6"}
         color={"#0B2447"}
         borderRadius={"lg"}
-        p={5}
+        // width={"80%"}
+        
+        px={"40px"}
+        py={5}
       >
         {loading ? (
           <Spinner size="xl" w={20} h={20} alignSelf={"center"} m={"auto"} />

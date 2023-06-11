@@ -1,5 +1,29 @@
-.messages{
+.messages {
+  position: relative;
+  width: "100%";
+  overflow-y: scroll;
+}
+.messages::-webkit-scrollbar {
+  display: none;
+}
 
-    width: "100%";
-    overflow-y:scroll
+.friend-chatbox::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 20px solid #0c2347;
+  position: relative;
+  left: 10px;
+}
+.user-chatbox::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 20px solid #B1D6FA;
+  position: relative;
+  right: 10px;
 }
