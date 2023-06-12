@@ -251,7 +251,7 @@ function GroupProfileModal({ fetchAgain, setFetchAgain }) {
         },
       };
 
-      const data = await axios.put(
+      await axios.put(
         "http://localhost:8000/api/chat/group/remove",
         // "/api/chat/group/remove",
         { chatId: selectedChat._id, users: user._id },

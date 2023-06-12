@@ -16,7 +16,7 @@ function ChatBoxBody() {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState();
-  const { User, selectedChat, setSelectedChat } = ChatState();
+  const { User, selectedChat } = ChatState();
   const toast = useToast();
   useEffect(() => {
     fetchMessages();

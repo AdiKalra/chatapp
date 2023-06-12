@@ -4,7 +4,7 @@ import { getSender } from "../../config/ChatLogic";
 import GroupProfileModal from "../Modals/GroupProfileModal";
 import ProfileModal from "../Modals/ProfileModal";
 import { ChatState } from "../../Context/chatProvider";
-import { Avatar, Box, Text, useToast } from "@chakra-ui/react";
+import { Avatar, Box, Text } from "@chakra-ui/react";
 
 function ChatBoxHeader({ fetchAgain, setFetchAgain }) {
   const { User, selectedChat, setSelectedChat } = ChatState();

@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { ChatState } from "../../Context/chatProvider";
 import { Box, Text } from "@chakra-ui/react";
 import ChatBoxHeader from "./ChatBoxHeader";
 import ChatBoxBody from "./ChatBoxBody";
+import io from "socket.io-client";
 
+const ENDPOINT = "http://localhost:8000";
+
+let socket, selectedChatCompare;
 function SingleChat({ fetchAgain, setFetchAgain }) {
-  const { User, selectedChat, setSelectedChat } = ChatState();
-
-  const [loading, setLoading] = useState(true);
+  const { selectedChat } = ChatState();
+  useEffect(() => {
+    socket = io(ENDPOINT);
+  }, []);
+  // const [loading, setLoading] = useState(true);
 
   return (
     <>
@@ -16,7 +22,6 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
           <ChatBoxHeader
             fetchAgain={fetchAgain}
             setFetchAgain={setFetchAgain}
-            
           />
           {/* <Box ml={"20px"} display={"flex"} justifyContent={"space-between"}>
           <Box

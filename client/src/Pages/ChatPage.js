@@ -4,9 +4,8 @@ import SideDrawer from "../components/Drawers/SideDrawer";
 import ChatBox from "../components/Chat Page/ChatBox";
 import AllChats from "../components/Chat Page/AllChats";
 import { useState } from "react";
-export default function ChatPage(props) {
-  const { User, setUser, selectedChat, setSelectedChat, chats, setChats } =
-    ChatState();
+export default function ChatPage() {
+  const { User } = ChatState();
 
     const [fetchAgain, setFetchAgain] = useState(false)
   return (
