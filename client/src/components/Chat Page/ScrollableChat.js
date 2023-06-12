@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ScrollableFeed from "react-scrollable-feed";
 import { ChatState } from "../../Context/chatProvider";
 import { Avatar, Box, Text } from "@chakra-ui/react";
 import ProfileModal from "../Modals/ProfileModal";
 import { isSameSender } from "../../config/ChatLogic";
 function ScrollableChat({ messages }) {
-  const { User, selectedChat, setSelectedChat } = ChatState();
-
+  const { User, selectedChat } = ChatState();
+  const messageEndRef = useRef(null);
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView();
+  }, [messages]);
   return (
     messages && (
       <ScrollableFeed>
@@ -142,6 +145,7 @@ function ScrollableChat({ messages }) {
           // );
           // })
         }
+        <div ref={messageEndRef} />
       </ScrollableFeed>
     )
   );
