@@ -4,6 +4,7 @@ import { ChatState } from "../../Context/chatProvider";
 import { Avatar, Box, Text } from "@chakra-ui/react";
 import ProfileModal from "../Modals/ProfileModal";
 import { isSameSender } from "../../config/ChatLogic";
+
 function ScrollableChat({ messages }) {
   const { User, selectedChat } = ChatState();
   const messageEndRef = useRef(null);
@@ -22,6 +23,7 @@ function ScrollableChat({ messages }) {
                 justifyContent={"flex-end"}
                 w={"100%"}
                 my={"5px"}
+                key={m._id}
               >
                 <Box
                   display={"flex"}
@@ -43,6 +45,7 @@ function ScrollableChat({ messages }) {
                 alignItems={"center"}
                 gap={"5px"}
                 my={"5px"}
+                key={m._id}
               >
                 {
                   // i < messages.length - 1 &&
@@ -107,9 +110,15 @@ function ScrollableChat({ messages }) {
               </Box>
             );
           })}
+        
+        <div ref={messageEndRef} />
+      </ScrollableFeed>
+    )
+  );
+}
 
-        {
-          //messages &&
+export default ScrollableChat;
+//messages &&
           // messages.map((message, index) => {
           //   return message.sender._id === User._id ? (
           //     <Box width={"100%"} display={"flex"} flexDirection={"row-reverse"}>
@@ -144,11 +153,3 @@ function ScrollableChat({ messages }) {
           // </div>
           // );
           // })
-        }
-        <div ref={messageEndRef} />
-      </ScrollableFeed>
-    )
-  );
-}
-
-export default ScrollableChat;
