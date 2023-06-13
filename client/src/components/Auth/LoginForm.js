@@ -52,7 +52,6 @@ function LoginForm() {
         data,
         config
       );
-      console.log(response_data)
 
       setLoading(false);
 

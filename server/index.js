@@ -50,17 +50,17 @@ const io = socket(server, {
 
 io.on("connection", (socket) => {
   // console.log("connected to socket.io id: ", socket.id);
-  console.log("connected to socket.io");
+  // console.log("connected to s/ocket.io");
 
   socket.on("setup", (user_data) => {
     socket.join(user_data._id);
-    console.log(user_data._id);
+    // console.log(user_data._id);
     socket.emit("connected");
   });
 
   socket.on("join chat", (room) => {
     socket.join(room);
-    console.log("User joined room: ", room);
+    // console.log("User joined room: ", room);
   });
 
   socket.on("new message", (newMessageReceived) => {
@@ -74,13 +74,19 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("typing", (room) => {
-    socket.in(room).emit("typing");
-  });
-  
-  socket.on("stop typing", (room) => {
-    socket.in(room).emit("stop typing");
+  // socket.on("typing", (room) => {
+  //   socket.in(room).emit("typing");
+  // });
+
+  // socket.on("stop typing", (room) => {
+  //   socket.in(room).emit("stop typing");
+  // });
+
+  socket.off("setup", () => {
+    socket.leave(user_data._id);
   });
 });
+
+
 
 

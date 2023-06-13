@@ -34,13 +34,21 @@ import {
 import axios from "axios";
 import UserItem from "../UserListItems/UserItem";
 import ListLoader from "../Loader/ListLoader";
+import { getSender } from "../../config/ChatLogic";
 
 function SideDrawer() {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
-  const { User, setSelectedChat, chats, setChats } = ChatState();
+  const {
+    User,
+    setSelectedChat,
+    chats,
+    setChats,
+    notifications,
+    setNotifications,
+  } = ChatState();
   const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -212,10 +220,28 @@ function SideDrawer() {
         >
           <Menu>
             <MenuButton>
-              <BellIcon fontSize={"3xl"} />
+              <BellIcon
+                fontSize={"3xl"}
+                color={notifications.length > 0 ? "red" : "black"}
+              />
             </MenuButton>
-            <MenuList>
-              <MenuItem></MenuItem>
+            <MenuList px={3}>
+              {!notifications.length && "No new messages"}
+              {notifications.map((notif) => (
+                <MenuItem
+                  key={notif._id}
+                  onClick={() => {
+                    setSelectedChat(notif.chat);
+                    setNotifications(notifications.filter((n) => n !== notif));
+                  }}
+                >
+                  {notif.chat.isGrouped
+                    ? `New message in ${notif.chat.chatName}`
+                    : `New message from ${
+                        getSender(User, notif.chat.users).name
+                      }`}
+                </MenuItem>
+              ))}
             </MenuList>
           </Menu>
           <Menu>
