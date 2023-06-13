@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ChatState } from "../../Context/chatProvider";
 import { Box, Text } from "@chakra-ui/react";
 import ChatBoxHeader from "./ChatBoxHeader";
@@ -8,7 +8,6 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   const { selectedChat } = ChatState();
 
   // const [loading, setLoading] = useState(true);
-
   return (
     <>
       {selectedChat ? (
@@ -74,7 +73,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
           </Box>
         </Box>*/}
 
-          <ChatBoxBody />
+          <ChatBoxBody fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
         </>
       ) : (
         <Box

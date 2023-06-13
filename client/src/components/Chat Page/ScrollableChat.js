@@ -5,7 +5,7 @@ import { Avatar, Box, Text } from "@chakra-ui/react";
 import ProfileModal from "../Modals/ProfileModal";
 import { isSameSender } from "../../config/ChatLogic";
 
-function ScrollableChat({ messages }) {
+function ScrollableChat({ messages, isTyping }) {
   const { User, selectedChat } = ChatState();
   const messageEndRef = useRef(null);
   useEffect(() => {

@@ -15,15 +15,15 @@ import io from "socket.io-client";
 
 const ENDPOINT = "http://localhost:8000";
 
-let socket, selectedChatCompare;
-function ChatBoxBody() {
+var socket, selectedChatCompare;
+function ChatBoxBody({ fetchAgain, setFetchAgain }) {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState();
-  const { User, selectedChat } = ChatState();
   const [socketConnected, setSocketConnected] = useState(false);
-  const [typing, setTyping] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
+  // const [typing, setTyping] = useState(false);
+  // const [isTyping, setIsTyping] = useState(false);
+  const { User, selectedChat, notifications, setNotifications } = ChatState();
   const toast = useToast();
 
   useEffect(() => {
@@ -36,8 +36,8 @@ function ChatBoxBody() {
     socket = io(ENDPOINT);
     socket.emit("setup", User);
     socket.on("connected", () => setSocketConnected(true));
-    socket.on("typing", () => setIsTyping(true));
-    socket.on("stop typing", () => setIsTyping(false));
+    // socket.on("typing", () => setIsTyping(true));
+    // socket.on("stop typing", () => setIsTyping(false));
 
     // eslint-disable-next-line
   }, []);
@@ -45,11 +45,18 @@ function ChatBoxBody() {
   useEffect(() => {
     socket.on("message received", (newMessageReceived) => {
       if (
-        !selectedChatCompare ||
-        selectedChat._id !== selectedChatCompare._id
+        !selectedChat || // if chat is not selected or doesn't match current chat
+        selectedChat._id !== newMessageReceived.chat._id
       ) {
         // show notification
-      } else {
+        // if (!notifications.includes(newMessageReceived)) {
+        setNotifications([...notifications, newMessageReceived]);
+        setFetchAgain(!fetchAgain);
+        // }
+      } else if (
+        selectedChat &&
+        selectedChat._id === newMessageReceived.chat._id
+      ) {
         setMessages([...messages, newMessageReceived]);
       }
     });
@@ -95,7 +102,7 @@ function ChatBoxBody() {
     const keydown = type === "keydown" && e.key === "Enter";
     const click = type === "click";
 
-    socket.emit("stop typing", selectedChat._id);
+    // socket.emit("stop typing", selectedChat._id);
     if ((keydown || click) && newMessage) {
       try {
         const config = {
@@ -128,28 +135,27 @@ function ChatBoxBody() {
     }
   };
 
-  const typingHandler = async (e) => {
+  const typingHandler = (e) => {
     setNewMessage(e.target.value);
 
-    // Typing Indicator Logic
     // if (!socketConnected) return;
-    if (!typing) {
-      setTyping(true);
-      socket.emit("typing", selectedChat._id);
-    }
-    let lastLastTyping = new Date().getTime();
-    let timerLength = 3000;
 
-    setTimeout(() => {
-      let currTime = new Date().getTime();
-      let timeDiff = currTime - lastLastTyping;
-      // if (timeDiff >= timerLength && typing) {
-      if (timeDiff >= timerLength && !typing) {
-        socket.emit("stop typing", selectedChat._id);
-        setTyping(false);
-      }
-    }, timerLength);
+    // if (!typing) {
+    //   setTyping(true);
+    //   socket.emit("typing", selectedChat._id);
+    // }
+    // let lastTypingTime = new Date().getTime();
+    // var timerLength = 3000;
+    // setTimeout(() => {
+    //   var timeNow = new Date().getTime();
+    //   var timeDiff = timeNow - lastTypingTime;
+    //   if (timeDiff >= timerLength && typing) {
+    //     socket.emit("stop typing", selectedChat._id);
+    //     setTyping(false);
+    //   }
+    // }, timerLength);
   };
+
   return (
     <>
       <Box
@@ -161,8 +167,6 @@ function ChatBoxBody() {
         bgColor={"#edf2f6"}
         color={"#0B2447"}
         borderRadius={"lg"}
-        // width={"80%"}
-
         px={"40px"}
         py={5}
       >
@@ -170,8 +174,7 @@ function ChatBoxBody() {
           <Spinner size="xl" w={20} h={20} alignSelf={"center"} m={"auto"} />
         ) : (
           <div className="messages">
-            <ScrollableChat messages={messages} isTyping={isTyping} />
-            {isTyping ? <div>Typing</div> : ""}
+            <ScrollableChat messages={messages} />
           </div>
         )}
 

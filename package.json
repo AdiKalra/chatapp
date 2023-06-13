@@ -30,7 +30,6 @@
     "mongoose": "^7.0.5",
     "nodemon": "^2.0.22",
     "npm": "^9.6.6",
-    "react-scroll": "^1.8.9",
     "socket.io": "^4.6.2"
   }
 }
