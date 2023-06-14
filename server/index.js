@@ -22,12 +22,15 @@ app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
+// -------------------------Deployment---------------------------
 const __dirname1 = path.resolve();
 
-app.use(express.static(path.join(__dirname1, "/client/public")));
-app.get("/", (req, res) =>
-  res.sendFile(path.resolve(__dirname1, "client", "public", "index.html"))
-);
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/client/build")));
+  app.get("/", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"))
+  );
+}
 
 app.use(not_found);
 app.use(error_handling);
