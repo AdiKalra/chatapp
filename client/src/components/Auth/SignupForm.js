@@ -65,7 +65,6 @@ function SignupForm() {
         data
       );
       setDp(result.data.url);
-      console.log(result);
       setLoading(false);
       return;
     } else {

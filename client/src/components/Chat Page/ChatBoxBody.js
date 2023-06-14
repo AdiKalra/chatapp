@@ -118,7 +118,6 @@ function ChatBoxBody({ fetchAgain, setFetchAgain }) {
           { content: newMessage, chatId: selectedChat._id },
           config
         );
-        // console.log(data)
         setMessages([...messages, data]);
         socket.emit("new message", data);
       } catch (error) {
