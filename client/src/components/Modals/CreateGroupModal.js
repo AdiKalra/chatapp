@@ -46,8 +46,8 @@ function CreateGroupModal({ children }) {
       };
 
       const { data } = await axios.get(
-        `http://localhost:8000/api/user?search=${search}`,
-        // `/api/user?search=${search}`,
+        // `http://localhost:8000/api/user?search=${search}`,
+        `/api/user?search=${search}`,
         config
       );
       setSearchResults(data);
@@ -129,8 +129,8 @@ function CreateGroupModal({ children }) {
         users: selectedUsers,
       };
       const { data } = await axios.post(
-        "http://localhost:8000/api/chat/group",
-        // "/api/chat/group",
+        // "http://localhost:8000/api/chat/group",
+        "/api/chat/group",
         groupData,
         config
       );

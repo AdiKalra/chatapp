@@ -1,5 +1,7 @@
 /client/node_modules
 /server1/node_modules
 /node_modules
-.vercel
 .env
+
+/client/build
+/build
