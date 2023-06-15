@@ -55,8 +55,8 @@ function GroupProfileModal({ fetchAgain, setFetchAgain }) {
       };
 
       const { data } = await axios.put(
-        // "http://localhost:8000/api/chat/group/rename",
-        "/api/chat/group/rename",
+        "http://localhost:8000/api/chat/group/rename",
+        // "/api/chat/group/rename",
         {
           name: groupChatName,
           chatId: selectedChat._id,
@@ -102,8 +102,8 @@ function GroupProfileModal({ fetchAgain, setFetchAgain }) {
       };
 
       const { data } = await axios.get(
-        // `http://localhost:8000/api/user?search=${search}`,
-        `/api/user?search=${search}`,
+        `http://localhost:8000/api/user?search=${search}`,
+        // `/api/user?search=${search}`,
         config
       );
       setSearchResults(data);
@@ -152,8 +152,8 @@ function GroupProfileModal({ fetchAgain, setFetchAgain }) {
       };
 
       const { data } = await axios.put(
-        // "http://localhost:8000/api/chat/group/add",
-        "/api/chat/group/add",
+        "http://localhost:8000/api/chat/group/add",
+        // "/api/chat/group/add",
         { chatId: selectedChat._id, users: users._id },
         config
       );
@@ -193,8 +193,8 @@ function GroupProfileModal({ fetchAgain, setFetchAgain }) {
       };
 
       const { data } = await axios.put(
-        // "http://localhost:8000/api/chat/group/remove",
-        "/api/chat/group/remove",
+        "http://localhost:8000/api/chat/group/remove",
+        // "/api/chat/group/remove",
         { chatId: selectedChat._id, users: users._id },
         config
       );
@@ -252,8 +252,8 @@ function GroupProfileModal({ fetchAgain, setFetchAgain }) {
       };
 
       await axios.put(
-        // "http://localhost:8000/api/chat/group/remove",
-        "/api/chat/group/remove",
+        "http://localhost:8000/api/chat/group/remove",
+        // "/api/chat/group/remove",
         { chatId: selectedChat._id, users: user._id },
         config
       );
