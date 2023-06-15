@@ -27,7 +27,6 @@ function ChatBoxBody({ fetchAgain, setFetchAgain }) {
   const toast = useToast();
 
   useEffect(() => {
-    document.title = "message fetch";
     fetchMessages();
     selectedChatCompare = selectedChat;
     // eslint-disable-next-line
