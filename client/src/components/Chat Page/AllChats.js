@@ -14,6 +14,7 @@ function AllChats({ fetchAgain }) {
   const toast = useToast();
 
   const fetchChats = async () => {
+    
     setLoggedUser(JSON.parse(localStorage.getItem("user")));
     try {
       const config = {
