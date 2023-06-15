@@ -13,7 +13,7 @@ import "../style.css";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:8000";
+const ENDPOINT = "/";
 
 var socket, selectedChatCompare;
 function ChatBoxBody({ fetchAgain, setFetchAgain }) {
@@ -27,6 +27,7 @@ function ChatBoxBody({ fetchAgain, setFetchAgain }) {
   const toast = useToast();
 
   useEffect(() => {
+    document.title = "message fetch";
     fetchMessages();
     selectedChatCompare = selectedChat;
     // eslint-disable-next-line
@@ -44,15 +45,9 @@ function ChatBoxBody({ fetchAgain, setFetchAgain }) {
 
   useEffect(() => {
     socket.on("message received", (newMessageReceived) => {
-      if (
-        !selectedChat || // if chat is not selected or doesn't match current chat
-        selectedChat._id !== newMessageReceived.chat._id
-      ) {
-        // show notification
-        // if (!notifications.includes(newMessageReceived)) {
+      if (!selectedChat || selectedChat._id !== newMessageReceived.chat._id) {
         setNotifications([...notifications, newMessageReceived]);
         setFetchAgain(!fetchAgain);
-        // }
       } else if (
         selectedChat &&
         selectedChat._id === newMessageReceived.chat._id
@@ -76,17 +71,17 @@ function ChatBoxBody({ fetchAgain, setFetchAgain }) {
       };
 
       const { data } = await axios.get(
-        `http://localhost:8000/api/message/${selectedChat._id}`,
-        // `/api/message/${selectedChat._id}`,
+        // `http://localhost:8000/api/message/${selectedChat._id}`,
+        `/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
       setLoading(false);
       socket.emit("join chat", selectedChat._id);
     } catch (error) {
+      console.log(error);
       toast({
-        title: "Error Occured",
-        description: "Unable to fetch messages",
+        title: "Unable to fetch messages",
         status: "error",
         duration: 1000,
         isClosable: true,
@@ -98,6 +93,7 @@ function ChatBoxBody({ fetchAgain, setFetchAgain }) {
   };
 
   const sendMessage = async (e) => {
+    console.log("message sent");
     const type = e.type;
     const keydown = type === "keydown" && e.key === "Enter";
     const click = type === "click";
@@ -113,17 +109,17 @@ function ChatBoxBody({ fetchAgain, setFetchAgain }) {
 
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost:8000/api/message",
-          // "/api/message",
+          // "http://localhost:8000/api/message",
+          "/api/message",
           { content: newMessage, chatId: selectedChat._id },
           config
         );
         setMessages([...messages, data]);
         socket.emit("new message", data);
       } catch (error) {
+        console.log(error);
         toast({
-          title: "Error Occured",
-          description: "Unable to fetch messages",
+          title: "Unable to send message",
           status: "error",
           duration: 1000,
           isClosable: true,
