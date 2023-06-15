@@ -46,8 +46,8 @@ function CreateGroupModal({ children }) {
       };
 
       const { data } = await axios.get(
-        // `http://localhost:8000/api/user?search=${search}`,
-        `/api/user?search=${search}`,
+        `http://localhost:8000/api/user?search=${search}`,
+        // `/api/user?search=${search}`,
         config
       );
       setSearchResults(data);

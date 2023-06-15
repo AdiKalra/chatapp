@@ -119,8 +119,8 @@ function SignupForm() {
         },
       };
       const response_data = await axios.post(
-        // "http://localhost:8000/api/user/",
-        "/api/user/",
+        "http://localhost:8000/api/user/",
+        // "/api/user/",
         data,
         config
       );

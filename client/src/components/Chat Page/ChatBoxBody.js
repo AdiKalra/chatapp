@@ -113,8 +113,8 @@ function ChatBoxBody({ fetchAgain, setFetchAgain }) {
 
         setNewMessage("");
         const { data } = await axios.post(
-          // "http://localhost:8000/api/message",
-          "/api/message",
+          "http://localhost:8000/api/message",
+          // "/api/message",
           { content: newMessage, chatId: selectedChat._id },
           config
         );
